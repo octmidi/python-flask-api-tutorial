@@ -1,6 +1,4 @@
-from flask import Flask
-from flask import Flask, jsonify
-from flask import request
+from flask import Flask, jsonify, request, abort
 import json
 
 
@@ -34,23 +32,16 @@ def agregar_elemento(nuevo_elemento):
         outfile.write(json_object)
 
 # Nuevo elemento que deseas agregar
-
-
-        
+     
     
 @app.route('/todos', methods=['POST'])
 # http://localhost:3245/todos
 
 def add_new_todo():
-    new_todo = {
-    "Name": "Demian", 
-    "Last_Name": "Hermann Hesse",
-    "Age":"74",
-    "Address":"Born 156"
-    }
-
-    agregar_elemento(new_todo)
-    request_body = request.data
+    request_body = request.json
+    #abort(500)
+    agregar_elemento(request_body)
+   
     print("Incoming request with the following body", request_body)
     return 'Response for the POST todo'
 
